@@ -107,24 +107,29 @@
 
 <!-- Script Section -->
 <script>
-  // Drag and Drop
   const dropZone = document.getElementById('dropZone');
   const fileInput = document.getElementById('fileInput');
 
-  dropZone.addEventListener('click', (e) => {
-  if (e.target === dropZone) {
-    fileInput.click();
-  }
-});
+  // 🔒 Prevent click on input itself from re-opening picker
+  fileInput.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
 
-  dropZone.addEventListener('dragover', e => {
+  // 🎯 Drop-zone triggers file picker
+  dropZone.addEventListener('click', () => {
+    fileInput.click();
+  });
+
+  dropZone.addEventListener('dragover', (e) => {
     e.preventDefault();
     dropZone.classList.add('dragover');
   });
+
   dropZone.addEventListener('dragleave', () => {
     dropZone.classList.remove('dragover');
   });
-  dropZone.addEventListener('drop', e => {
+
+  dropZone.addEventListener('drop', (e) => {
     e.preventDefault();
     dropZone.classList.remove('dragover');
     if (e.dataTransfer.files.length) {
@@ -132,7 +137,7 @@
     }
   });
 
-  // Progress Bar
+  // Progress bar animation (optional)
   document.getElementById('uploadForm').addEventListener('submit', function () {
     const progressBar = document.getElementById('progressBar');
     const progressWrapper = document.getElementById('progressWrapper');
@@ -153,5 +158,6 @@
     }, 200);
   });
 </script>
+
 </body>
 </html>
