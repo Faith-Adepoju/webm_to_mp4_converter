@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WEBM to MP4 Converter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #1a1c2c;
+      color: #e0e0e0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    h2 {
+      color: #ffffff;
+    }
+    .drop-zone {
+      border: 2px dashed #4b5563;
+      padding: 40px;
+      text-align: center;
+      border-radius: 12px;
+      background-color: #2e3047;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+      color: #cbd5e1;
+    }
+    .drop-zone.dragover {
+      background-color: #374151;
+      border-color: #60a5fa;
+    }
+    input[type="file"] {
+      background-color: #374151;
+      color: #f1f5f9;
+      border: 1px solid #4b5563;
+    }
+    .btn-primary {
+      background-color: #3b82f6;
+      border-color: #3b82f6;
+    }
+    .btn-primary:hover {
+      background-color: #2563eb;
+      border-color: #2563eb;
+    }
+    .alert {
+      background-color: #334155;
+      color: #f1f5f9;
+      border: 1px solid #475569;
+    }
+    .progress {
+      background-color: #2d3142;
+    }
+    .progress-bar {
+      background-color: #10b981;
+    }
+    footer {
+      margin-top: 40px;
+      padding: 15px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container my-5">
+  <!-- Header -->
+  <div class="mb-4 text-center">
+    <h2>🎬 WEBM to MP4 Converter</h2>
+    <p class="text-muted">Fast, secure & stylish video conversion by Faith & ChatGPT</p>
+  </div>
+
+  <!-- Instructions -->
+  <div class="alert mb-4" role="alert">
+    <strong>How to use:</strong>
+    <ol class="mb-0">
+      <li>Select or drag a <code>.webm</code> video below</li>
+      <li>Click <strong>Convert</strong></li>
+      <li>Wait for progress to complete</li>
+      <li>Download your converted <code>.mp4</code> file</li>
+    </ol>
+  </div>
+
+  <!-- Upload Form -->
+  <form method="post" enctype="multipart/form-data" id="uploadForm">
+    <div class="drop-zone mb-3" id="dropZone">
+      <p>🎯 Drag & Drop your <code>.webm</code> file here or click to select</p>
+      <input type="file" name="video" accept=".webm" class="form-control mt-2" id="fileInput" required>
+    </div>
+    <div class="d-grid">
+      <button type="submit" class="btn btn-primary" id="submitBtn">🚀 Convert Now</button>
+    </div>
+  </form>
+
+  <!-- Progress Bar -->
+  <div class="progress mt-4" style="height: 25px; display: none;" id="progressWrapper">
+    <div class="progress-bar progress-bar-striped progress-bar-animated"
+         role="progressbar"
+         style="width: 0%;"
+         id="progressBar">0%</div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  &copy; 2025 Faith Adepoju & ChatGPT — Crafted with creativity & code.
+</footer>
+
+<!-- Script Section -->
+<script>
+  // Drag and Drop
+  const dropZone = document.getElementById('dropZone');
+  const fileInput = document.getElementById('fileInput');
+
+  dropZone.addEventListener('click', () => fileInput.click());
+  dropZone.addEventListener('dragover', e => {
+    e.preventDefault();
+    dropZone.classList.add('dragover');
+  });
+  dropZone.addEventListener('dragleave', () => {
+    dropZone.classList.remove('dragover');
+  });
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+    if (e.dataTransfer.files.length) {
+      fileInput.files = e.dataTransfer.files;
+    }
+  });
+
+  // Progress Bar
+  document.getElementById('uploadForm').addEventListener('submit', function () {
+    const progressBar = document.getElementById('progressBar');
+    const progressWrapper = document.getElementById('progressWrapper');
+    const submitBtn = document.getElementById('submitBtn');
+
+    submitBtn.disabled = true;
+    progressWrapper.style.display = 'block';
+
+    let progress = 0;
+    const interval = setInterval(() => {
+      if (progress >= 100) {
+        clearInterval(interval);
+      } else {
+        progress += 5;
+        progressBar.style.width = progress + '%';
+        progressBar.innerText = progress + '%';
+      }
+    }, 200);
+  });
+</script>
+</body>
+</html>
